@@ -1,9 +1,9 @@
 # Seluruh Instruksi Utama Program
 import sys
-from load import load_file, load_CLI, height_matrix
+from load import load_file, load_CLI
 
 
-
+global div 
 
 # preprocess
 def main():
@@ -13,7 +13,7 @@ def main():
         
     else:
         load_CLI()
-        print(height_matrix)
+        
 
 
 if __name__ == "__main__": 
