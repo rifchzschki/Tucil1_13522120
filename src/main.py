@@ -3,13 +3,26 @@ import sys
 from load import load_file, load_CLI
 
 
-global div 
+# process
+def search_col():
+    ...
+
+def search_row():
+    ...
+
+def first_step():
+    search_row()
+
+def process(buffer_size, width, height, matrix, num_seq, seqs):
+    first_step(matrix[0])
+    ...
 
 # preprocess
-def main():
+def load():
     if len(sys.argv)>1:
         arg = sys.argv[1]
-        load_file(arg)
+        buffer_size, width, height, matrix, num_seq, seqs = load_file(arg)
+        process(buffer_size, width, height, matrix, num_seq, seqs)
         
     else:
         load_CLI()
@@ -17,9 +30,8 @@ def main():
 
 
 if __name__ == "__main__": 
-    main()
+    load()
 
 
-# process
 
 # postprocess

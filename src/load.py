@@ -21,8 +21,16 @@ def load_file(nama_file):
     for j in range(height):
         matrix[j] = file.readline().split()
 
-    print(matrix)
+    num_seq = int(file.readline())
+    seqs = []
+    for _ in range(num_seq):
+        seq = file.readline().split()
+        reward = int(file.readline())
+        seqs.append([seq,reward])
+
     file.close()
+    
+    return buffer_size, width, height, matrix, num_seq, seqs
 
 def load_CLI():
     ...
