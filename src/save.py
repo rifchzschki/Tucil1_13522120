@@ -1,1 +1,0 @@
-# Proses menyimpan hasil permainan
