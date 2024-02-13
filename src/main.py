@@ -103,7 +103,7 @@ def load():
             print("Tidak ada solusi")
     else:
         matrix, sequens, h_matrix, w_matrix, buffer_size, num_seq = load_CLI()
-        buffer, coor, reward, time = start(buffer_size, w_matrix, h_matrix, matrix, num_seq, sequens)
+        buffer, coor, reward, time = start(buffer_size, w_matrix, h_matrix, matrix, sequens)
         print("\nBerikut adalah matriksnya:")
         for i in range(h_matrix):
             for j in range(w_matrix):
@@ -129,6 +129,18 @@ def load():
             nama = input("Masukkan nama file: ")
             file_path = os.path.join("test\\save", nama)
             with open(file_path,"w") as file:
+                file.write("\nBerikut adalah matriksnya:\n")
+                for i in range(h_matrix):
+                    for j in range(w_matrix):
+                        file.write(f"{matrix[i][j]}")
+                    file.write("\n")
+                file.write(f"\nAda sebanyak {len(sequens)} sequences:\n")
+                for seq in sequens:
+                    for q in seq[0]:
+                        file.write(f"{q}")
+                    file.write(f"\n{seq[1]}\n")
+                
+                file.write("\nHasil:\n")
                 file.write(f"{reward}\n")
                 # file.write(reward)
                 for i in range(len(buffer)):

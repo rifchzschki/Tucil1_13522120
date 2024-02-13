@@ -1,0 +1,22 @@
+
+Berikut adalah matriksnya:DADA
+BDBB
+CCCB
+BBBA
+
+Ada sebanyak 3 sequences:B
+25
+DCD
+48
+DDC
+1
+
+Hasil:
+75
+D B B B 
+(1, 1)
+(1, 2)
+(3, 2)
+(3, 4)
+
+3 ms
