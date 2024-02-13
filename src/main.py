@@ -6,137 +6,7 @@ from load import load_file, load_CLI
 from utils import *
 
 
-# # process
-# def search_col(matrix, col, height, goal):
-#     is_found = [(-1) for k in range(len(goal))]
-#     for i in range(len(goal)):
-#         found=False
-#         j=0
-#         while(j<height and not found):
-#             if matrix[j][col] == goal[i]:
-#                 is_found[i] = j
-#                 found=True
-#             j+=1
-#     return is_found 
-
-
-# def search_row(matrix, width, row, goal):
-#     is_found = [(-1) for k in range(len(goal))]
-#     for i in range(len(goal)):
-#         found=False
-#         j=0
-#         while(j<width and not found):
-#             if matrix[row][j] == goal[i]:
-#                 is_found[i] = j
-#                 found=True
-#             j+=1
-#     return is_found
-    
-# def search_path(matrix, width, height, pos_row, pos_col, temp_buffer, coor, reward, seq, seq_begin):
-#     is_found = True
-#     tmp_row = pos_row; tmp_col = pos_col; tmp_seq_begin = seq_begin
-#     buffer = temp_buffer.copy()
-#     wrong = False
-#     count_found = 0
-#     # print("mulai")
-#     # print("ini buffer sebelum", buffer)
-#     tmp_coor = []
-#     seq_copy = seq[0].copy()
-#     # find_and_remove_sublist(buffer, seq[0])
-#     inter = find_sublist(buffer, seq[0])
-#     # print(inter)
-#     if len(inter)!=0:
-#         if(inter[-1]==buffer[-1] and inter[0]==buffer[len(buffer)-len(inter)]):
-#             seq_copy = seq_copy[len(inter):]
-#     # if(len(seq_copy)==0):
-#     #     break
-#     # print(seq_copy)
-#     while(seq_begin<len(seq_copy) and is_found):
-#         if len(buffer) % 2 == 2:
-#             found = search_row(matrix, width, pos_row, [seq_copy[seq_begin]])
-#             if (found[0] != (-1)):
-#                 buffer.append(seq_copy[seq_begin])
-#                 pos_col = found[0]
-#                 seq_begin+=1
-#                 count_found +=1
-#                 tmp_coor.append([pos_row,pos_col])
-#             else:
-#                 is_found = False
-
-#         else:
-#             found = search_col(matrix, pos_col, height, [seq_copy[seq_begin]])
-#             if (found[0] != (-1)):
-#                 buffer.append(seq_copy[seq_begin])
-#                 pos_row = found[0]
-#                 seq_begin+=1
-#                 count_found +=1
-#                 tmp_coor.append([pos_row,pos_col])
-#             else:
-#                 is_found = False
-#         # print("ini buffer", buffer, tmp_coor)
-    
-#     if count_found == len(seq[0]):
-#         insert_buffer(buffer, seq[0])
-#         insert_buffer(coor, tmp_coor)
-#         reward += seq[1]
-#         seq_begin = tmp_seq_begin
-#     else:
-#         # print(reward, seq[1])
-#         buffer = temp_buffer
-#         pos_col = tmp_col
-#         pos_row = tmp_row
-#         seq_begin = tmp_seq_begin
-#         wrong = True
-    
-
-#     return buffer,coor, pos_col, pos_row, reward, seq_begin, wrong
-
-
-
-# def process(buffer_size, width, height, matrix, num_seq, seqs):
-#     #inisiasi
-#     best_buffer = []
-#     best_reward = 0
-#     best_coor = []
-#     col = 0
-#     seq_begin = 0
-#     while(col < width): # pengecekan dilakukan sebanyak jumlah kolom
-#         reward = 0
-#         temp_buffer = []
-#         temp_coor = []
-#         row_tmp = 0; col_tmp = col
-#         if matrix[0][col]=="BD":
-#             seq_begin += 1
-#         temp_coor.append([0,col])
-#         temp_buffer.append(matrix[0][col])
-#         count_wrong = 0
-#         print("col",col)
-#         # print("buffer awal:",temp_buffer)
-#         while(len(temp_buffer)<buffer_size and count_wrong < len(seqs)):
-#             # k=0;found=True
-#             # min_length = min(len(sublist) for sublist in seqs_without_reward)
-#             for seq in (seqs):
-#                 print("pengecekan seq", seq)
-#                 if (buffer_size-len(temp_buffer))>=len(seq[0]):
-#                     temp_buffer, temp_coor, col_tmp, row_tmp, reward, seq_begin, wrong = search_path(matrix, width, height, row_tmp, col_tmp, temp_buffer, temp_coor, reward, seq, seq_begin)
-#                     if wrong:
-#                         count_wrong +=1
-#                     else:
-#                         count_wrong = 0
-#                 else:
-#                     count_wrong +=1
-            
-#             # print("setelah pengecekan",temp_buffer)
-#             # print(reward)
-
-#         if len(temp_buffer)==buffer_size and best_reward<reward:
-#             best_buffer = temp_buffer
-#             best_reward =  reward
-#             best_coor = temp_coor
-        
-#         col+=1
-#     return best_buffer, best_reward, best_coor
-
+# process
 def process(matrix, h_matrix, w_matrix, checked, temp_buffer, buffer_size, seq, temp_path, x, y, direction):
     global rew, buffer, path
     
@@ -146,8 +16,8 @@ def process(matrix, h_matrix, w_matrix, checked, temp_buffer, buffer_size, seq, 
     current_reward = 0
     for i in range(len(seq)):
         for j in range(len(temp_buffer) - len(seq[i][0]) + 1):
-            t = temp_buffer[j:j+len(seq[i][0])]
-            if t == seq[i][0]:
+            temp_seq = temp_buffer[j:j+len(seq[i][0])]
+            if temp_seq == seq[i][0]:
                 current_reward += seq[i][1]
     
     if current_reward > rew:
@@ -159,7 +29,7 @@ def process(matrix, h_matrix, w_matrix, checked, temp_buffer, buffer_size, seq, 
     if direction == 0:
         for i in range(h_matrix):
             temp_buffer.append(token)
-            temp_path.append((x, y))
+            temp_path.append((x+1, y+1))
             checked[y][x] = 1
             if checked[i][x] == 0:
                 process(matrix, h_matrix, w_matrix, checked,temp_buffer, buffer_size, seq, temp_path, x, i, 1)
@@ -169,7 +39,7 @@ def process(matrix, h_matrix, w_matrix, checked, temp_buffer, buffer_size, seq, 
     else:
         for i in range(w_matrix):
             temp_buffer.append(token)
-            temp_path.append((x, y))
+            temp_path.append((x+1, y+1))
             checked[y][x] = 1
             if checked[y][i] == 0:
                 process(matrix, h_matrix, w_matrix, checked,temp_buffer, buffer_size, seq, temp_path, i, y, 0)
@@ -205,10 +75,8 @@ def load():
     if len(sys.argv)>1:
         arg = sys.argv[1]
         buffer_size, width, height, matrix, num_seq, seqs = load_file(arg)
-        # buffer, reward, coor = process(buffer_size, width, height, matrix, num_seq, seqs)
         buffer, coor, reward, time = start(buffer_size, width, height, matrix, num_seq, seqs)
         if (len(buffer)!=0):
-            # print (buffer, reward, coor)
             print(reward)
             for i in range(len(buffer)):
                 print(buffer[i], end=' ')
@@ -279,7 +147,3 @@ def load():
 
 if __name__ == "__main__": 
     load()
-
-
-
-# postprocess
