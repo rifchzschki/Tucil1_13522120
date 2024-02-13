@@ -25,7 +25,7 @@ def process(matrix, h_matrix, w_matrix, pos, temp_buffer, buffer_size, seq, temp
         path = temp_path.copy()
     
     token = matrix[y][x]
-    if direction == 0:
+    if direction == 0: # vertical
         for i in range(h_matrix):
             temp_buffer.append(token)
             temp_path.append((x+1, y+1))
@@ -35,7 +35,7 @@ def process(matrix, h_matrix, w_matrix, pos, temp_buffer, buffer_size, seq, temp
             pos[y][x] = 0
             temp_buffer.pop()
             temp_path.pop()
-    else:
+    else: # Horizontal
         for i in range(w_matrix):
             temp_buffer.append(token)
             temp_path.append((x+1, y+1))
@@ -46,26 +46,25 @@ def process(matrix, h_matrix, w_matrix, pos, temp_buffer, buffer_size, seq, temp
             temp_buffer.pop()
             temp_path.pop()
 
-def start(buffer_size, width, height, matrix, num_seq, seqs):
+def start(buffer_size, width, height, matrix, seqs):
     global rew, buffer, path
     pos = [[0] * width for _ in range(height)]
     buffer = []
     path = []
-    best_buff = None
-    best_path = None
+    best_buff = []
+    best_path = []
     best_reward = 0
     start_time = time.time()
     for i in range(width):
             rew = 0
+            buffer = []
+            path = []
             process(matrix, height, width, pos, buffer, buffer_size, seqs, path, i, 0, 0)
-            # print(buffer)
             if rew > best_reward:
                 best_reward = rew
                 best_buff = buffer
                 best_path = path
-                # print(best_reward)
-                # print(best_buff)
-                # print(best_path)
+                
     end_time = time.time()
     return best_buff, best_path, best_reward, (end_time-start_time)
 
@@ -74,7 +73,7 @@ def load():
     if len(sys.argv)>1:
         arg = sys.argv[1]
         buffer_size, width, height, matrix, num_seq, seqs = load_file(arg)
-        buffer, coor, reward, time = start(buffer_size, width, height, matrix, num_seq, seqs)
+        buffer, coor, reward, time = start(buffer_size, width, height, matrix, seqs)
         if (len(buffer)!=0):
             print(reward)
             for i in range(len(buffer)):
