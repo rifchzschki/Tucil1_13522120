@@ -3,7 +3,6 @@ import sys
 import time
 import os
 from load import load_file, load_CLI
-from utils import *
 
 
 # process
