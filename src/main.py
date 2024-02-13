@@ -129,7 +129,7 @@ def load():
             nama = input("Masukkan nama file: ")
             file_path = os.path.join("test\\save", nama)
             with open(file_path,"w") as file:
-                file.write("\nBerikut adalah matriksnya:\n")
+                file.write("Berikut adalah matriksnya:\n")
                 for i in range(h_matrix):
                     for j in range(w_matrix):
                         file.write(f"{matrix[i][j]}")
