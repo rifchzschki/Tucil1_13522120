@@ -6,7 +6,7 @@ from load import load_file, load_CLI
 
 
 # process
-def process(matrix, h_matrix, w_matrix, checked, temp_buffer, buffer_size, seq, temp_path, x, y, direction):
+def process(matrix, h_matrix, w_matrix, pos, temp_buffer, buffer_size, seq, temp_path, x, y, direction):
     global rew, buffer, path
     
     if len(temp_buffer) > buffer_size:
@@ -21,53 +21,53 @@ def process(matrix, h_matrix, w_matrix, checked, temp_buffer, buffer_size, seq, 
     
     if current_reward > rew:
         rew = current_reward
-        buffer = temp_buffer[:]
-        path = temp_path[:]
+        buffer = temp_buffer.copy()
+        path = temp_path.copy()
     
     token = matrix[y][x]
     if direction == 0:
         for i in range(h_matrix):
             temp_buffer.append(token)
             temp_path.append((x+1, y+1))
-            checked[y][x] = 1
-            if checked[i][x] == 0:
-                process(matrix, h_matrix, w_matrix, checked,temp_buffer, buffer_size, seq, temp_path, x, i, 1)
-            checked[y][x] = 0
+            pos[y][x] = 1
+            if pos[i][x] == 0:
+                process(matrix, h_matrix, w_matrix, pos,temp_buffer, buffer_size, seq, temp_path, x, i, 1)
+            pos[y][x] = 0
             temp_buffer.pop()
             temp_path.pop()
     else:
         for i in range(w_matrix):
             temp_buffer.append(token)
             temp_path.append((x+1, y+1))
-            checked[y][x] = 1
-            if checked[y][i] == 0:
-                process(matrix, h_matrix, w_matrix, checked,temp_buffer, buffer_size, seq, temp_path, i, y, 0)
-            checked[y][x] = 0
+            pos[y][x] = 1
+            if pos[y][i] == 0:
+                process(matrix, h_matrix, w_matrix, pos,temp_buffer, buffer_size, seq, temp_path, i, y, 0)
+            pos[y][x] = 0
             temp_buffer.pop()
             temp_path.pop()
 
 def start(buffer_size, width, height, matrix, num_seq, seqs):
     global rew, buffer, path
-    checked = [[0] * width for _ in range(height)]
+    pos = [[0] * width for _ in range(height)]
     buffer = []
     path = []
-    optimal_buff = None
-    optimal_path = None
-    optimum_reward = 0
+    best_buff = None
+    best_path = None
+    best_reward = 0
     start_time = time.time()
     for i in range(width):
             rew = 0
-            process(matrix, height, width, checked, buffer, buffer_size, seqs, path, i, 0, 0)
+            process(matrix, height, width, pos, buffer, buffer_size, seqs, path, i, 0, 0)
             # print(buffer)
-            if rew > optimum_reward:
-                optimum_reward = rew
-                optimal_buff = buffer
-                optimal_path = path
-                # print(optimum_reward)
-                # print(optimal_buff)
-                # print(optimal_path)
+            if rew > best_reward:
+                best_reward = rew
+                best_buff = buffer
+                best_path = path
+                # print(best_reward)
+                # print(best_buff)
+                # print(best_path)
     end_time = time.time()
-    return optimal_buff, optimal_path, optimum_reward, (end_time-start_time)
+    return best_buff, best_path, best_reward, (end_time-start_time)
 
 # preprocess
 def load():

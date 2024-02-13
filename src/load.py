@@ -1,13 +1,6 @@
 # Proses Membaca Data Awal dari file .txt maupun dari CLI
 import os
 from random import randint
-# from main import height_matrix
-
-# Initialize resource
-# buffer_size = 0
-# width_matrix, height_matrix = 0, 0
-# matrix = None # matriks[["7A" "55" "E9"], ["E9" "1C" "55"]]
-# sequence = None # array[[["BD", "E9", "1C"],(15)]]
 
 def load_file(nama_file):
     file_name = nama_file+ ".txt"
@@ -52,6 +45,4 @@ def load_CLI():
         seq = [token[randint(0,len(token)-1)] for i in range(randint(1,size_max_seq))]
         reward = randint(0,50)
         sequens.append([seq,reward])
-    # print(matrix, sequens)
     return matrix, sequens, h_matrix, w_matrix, buffer_size, num_seq
-# load_CLI()
