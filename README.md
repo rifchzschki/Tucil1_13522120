@@ -1,6 +1,4 @@
-# Tucil1_13522120
-
-# Penyelesaian Cyberpunk 2077 Breach Protocol dengan Algoritma Brute Force
+# Cyberpunk 2077 Breach Protocol Solver with Brute Force
 
 ## Deskripsi Singkat
 
